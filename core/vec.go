@@ -273,6 +273,20 @@ func (v Vec3Int64) Max(other Vec3Int64) Vec3Int64 {
 	}
 }
 
+// CoordinateSystem constructs a local, right-handed coordinate system given a
+// single vector. The returned vectors have unit length, and the i vector points
+// in the direction of the original vector.
+func (v Vec3Int64) CoordinateSystem() (i, j, k Vec3Int64) {
+	i = v.Unit()
+	if absInt64(i.X) > absInt64(i.Y) {
+		j = Vec3Int64{-i.Z, 0, i.X}.Unit()
+	} else {
+		j = Vec3Int64{0, i.Z, -i.Y}.Unit()
+	}
+	k = i.Cross(j)
+	return
+}
+
 // Vec3Float64 is a 3-dimensional vector.
 type Vec3Float64 struct {
 	X, Y, Z float64
@@ -412,4 +426,18 @@ func (v Vec3Float64) Max(other Vec3Float64) Vec3Float64 {
 		math.Max(v.Y, other.Y),
 		math.Max(v.Z, other.Z),
 	}
+}
+
+// CoordinateSystem constructs a local, right-handed coordinate system given a
+// single vector. The returned vectors have unit length, and the i vector points
+// in the direction of the original vector.
+func (v Vec3Float64) CoordinateSystem() (i, j, k Vec3Float64) {
+	i = v.Unit()
+	if math.Abs(i.X) > math.Abs(i.Y) {
+		j = Vec3Float64{-i.Z, 0, i.X}.Unit()
+	} else {
+		j = Vec3Float64{0, i.Z, -i.Y}.Unit()
+	}
+	k = i.Cross(j)
+	return
 }
