@@ -52,9 +52,9 @@ func (n Normal3) Equals(other Normal3) bool {
 	return n.X == other.X && n.Y == other.Y && n.Z == other.Z
 }
 
-// FaceAligned returns a normal that lies in the same hemisphere as the given vector.
+// FaceForward returns a normal that lies in the same hemisphere as the given vector.
 // The result is equivalent to either the original normal or its negation.
-func (n Normal3) FaceAligned(v Vector3) Normal3 {
+func (n Normal3) FaceForward(v Vector3) Normal3 {
 	if Vector3(n).Dot(v) < 0 {
 		return n.Neg()
 	}
